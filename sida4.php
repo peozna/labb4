@@ -38,8 +38,6 @@
     }
 
 ?>
-
-
     <?php 
         include 'footer.php';
     ?>
