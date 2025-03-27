@@ -5,13 +5,13 @@
 </head>   
 <body>
     <h1> Labb 1a Sida 1</h1>
-    <p>Denna sida..</p>
+    <p>På denna sida kan du spara ditt namn och få utsrkivet på olika sätt.</p>
     <?php 
         echo 'Denna text är genererad med utskriftskommandot i PHP';
     ?>
     <form action="" method="POST">
         Namn: <input type="text" name="name"><br>
-        <input type="submit">
+        <input type="submit" value="Spara">
     </form> 
     <?php
     if (isset($_POST["name"]) && !empty($_POST["name"])) { /*if sats som kollar att namn är ifyllt*/
