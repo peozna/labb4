@@ -6,7 +6,7 @@
 
 <body>
     <h1>Labb 1a Sida 3</h1>
-    <p> På denna..</p>
+    <p> På denna sida kan du skriva in en text och ett sökord. Textens ord sparas i en array och med en loop kommer sökordet att letas efter i texten.</p>
     
     <form action="" method="POST">
         Text: <input type="text" name="word"><br>
@@ -32,7 +32,7 @@
             /*Ta emot sökordet */
             $strSearchWord = htmlspecialchars($_POST["searchWord"]);
 
-            /*Söka efter sökordet i arrayen */
+            /*Loopar i arrayen efter sökordet*/
             $positions = [];
             foreach ($wordsArray as $index => $word) {
                 if ($word == $strSearchWord) {
