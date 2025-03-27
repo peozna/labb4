@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="mystyle.css">
 </head> 
 <body>
+    <?php include 'menu.php'; ?>
     <h1>Labb 1a Sida 2</h1>
     <p>På denna sida kan du mata in tre olika sorters djur som du kan finna på en bondgård. Dessa kommer sparar i en array som kommer bli utskriven i råformat och sedan med några ändringar. </p>
 

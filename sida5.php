@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="mystyle.css">
 </head> 
 <body>
+    <?php include 'menu.php'; ?>
     <h1>Labb 1a Sida 5</h1>
     <p>På denna sida används PHP servervariabel för att presentera information. </p>
 

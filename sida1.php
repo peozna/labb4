@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="mystyle.css">
 </head>   
 <body>
+    <?php include 'menu.php'; ?>
     <h1> Labb 1a Sida 1</h1>
     <p>På denna sida kan du spara ditt namn och få utsrkivet på olika sätt.</p>
     <?php 

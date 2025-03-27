@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="mystyle.css">
 </head> 
 <body>
+<?php include 'menu.php'; ?>
 <h1>Labb 1a Sida 4</h1>
 <p>På denna sida kan du skriva in längd och bredd på en rektangel och få dess area och omkrets uträknad.</p>
 

@@ -5,6 +5,7 @@
 </head>
 
 <body>
+    <?php include 'menu.php'; ?>
     <h1>Labb 1a Sida 3</h1>
     <p> På denna sida kan du skriva in en text och ett sökord. Textens ord sparas i en array och med en loop kommer sökordet att letas efter i texten.</p>
     
@@ -28,6 +29,9 @@
             print_r($wordsArray);
             echo "</pre>";
         }
+
+        $strSearchWord = "";
+
         if (isset($_POST["searchWord"]) && !empty($_POST["searchWord"])) {
             /*Ta emot sökordet */
             $strSearchWord = htmlspecialchars($_POST["searchWord"]);
@@ -48,8 +52,10 @@
             . implode(", ", $positions) . "<br>";
             echo "Sökordet '$strSearchWord' hittades $count gång/er i texten";
         } else {
+            if(!empty($strText) && !empty($strSearchWord)) {
             echo "<h3>Sökresultat</h3>";
             echo "<p>Sökordet '$strSearchWord' hittades inte i texten</p>"; 
+            }
         }
     
     ?>
