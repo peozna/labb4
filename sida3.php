@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
+    <title>Labb 1a Sida 3</title>
     <link rel="stylesheet" href="mystyle.css">
 </head>
 
@@ -9,18 +10,19 @@
     <h1>Labb 1a Sida 3</h1>
     <p> På denna sida kan du skriva in en text och ett sökord. Textens ord sparas i en array och med en loop kommer sökordet att letas efter i texten.</p>
     
-    <form action="" method="POST">
+    <!--Formulär som tar emot text och sökord -->
+    <form action="sida3.php" method="POST">
         Text: <input type="text" name="word"><br>
         Sökord: <input type="text" name="searchWord"><br>
         <input type="submit" value="Spara">
     </form>
 
     <?php 
+        /*Kollar att text är ifylld i formuläret */
         if (isset($_POST["word"]) && !empty($_POST["word"])) {
-            /*Ta emot text*/
             $strText = htmlspecialchars($_POST["word"]);
 
-            /*Sätta orden i en array */
+            /*Sätter in orden i en array */
             $wordsArray = explode (" ", $strText); 
 
             /*Skriver ut arrayen */
@@ -30,10 +32,12 @@
             echo "</pre>";
         }
 
+
+        /*Initierar sökord variabeln */
         $strSearchWord = "";
 
+        /*Kollar att sökord är ifyllt i formuläret */
         if (isset($_POST["searchWord"]) && !empty($_POST["searchWord"])) {
-            /*Ta emot sökordet */
             $strSearchWord = htmlspecialchars($_POST["searchWord"]);
 
             /*Loopar i arrayen efter sökordet*/
