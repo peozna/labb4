@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
     <link rel="stylesheet" href="mystyle.css">
-</head> 
+
 <nav> 
     <ul>
         <li><a href="sida1.php">Sida 1</a></li>
