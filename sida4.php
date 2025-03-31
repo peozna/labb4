@@ -47,4 +47,4 @@
         include 'footer.php';
     ?>
 </body>
-</hmtl>
+</html>
