@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+header, footer {
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 10px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    background-color: rgb(101, 200, 200);
+    text-align: center;
+}
+.left, .center, .right {
+    padding: 10px;
+    border: 1px solid rgb(60, 116, 116);
+    
+}

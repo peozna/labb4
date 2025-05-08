@@ -1,24 +1,25 @@
-<?php 
-session_start(); // Startar sessionen
-
-	if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) { // Kollar om användaren är inloggad
-		header("Location: login.php"); // Om inte, skicka till inloggningssidan
-		exit;
-	}
-
-?>
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-	<meta charset="UTF-8">
-	<title>Du är inloggad</title>
-	<link rel="stylesheet" href="mystyle.css">
+    <meta charset="UTF-8">
+    <title>Bloggportal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-	<h1>Du är inloggad</h1>
-	<p>	Välkommen,  <?php echo htmlspecialchars($_SESSION["username"])?>.</p>
-	<a href="logout.php">Logga ut</a> <!-- Länk för att logga ut -->
+<?php include('header.php'); ?>
+
+<div class="layout">
+    <aside class="left">
+        <?php include('menu.php'); ?>
+    </aside>
+    <main class="center">
+        <?php include('content.php'); ?>
+    </main>
+    <aside class ="right">
+        <?php include('info.php'); ?>
+    </aside>
+</div>
+
+<?php include('footer.php'); ?>
 </body>
-</html>

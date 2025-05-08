@@ -1,12 +1,13 @@
-    <link rel="stylesheet" href="mystyle.css">
+<?php 
+    include_once('db.php'); 
+    $query = "SELECT * FROM user"; // Hämtar alla användare från databasen
+    $result = mysqli_query($connection, $query); //Utför SQL-frågan
 
-<nav> 
-    <ul>
-        <li><a href="sida1.php">Sida 1</a></li>
-        <li><a href="sida2.php">Sida 2</a></li>
-        <li><a href="sida3.php">Sida 3</a></li>
-        <li><a href="sida4.php">Sida 4</a></li>
-        <li><a href="sida5.php">Sida 5</a></li>
-        <li><a href="sida6.html">Sida 6</a></li>
-    </ul>
-</nav>
+    echo "<ul>";
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo "<li><a href='index.php?blogger'=" . $row['id'] . ">" . 
+            htmlspecialchars($row['username']) . "</a></li>";
+        } // Loopar igenom alla användare och skrivver ut dem i en lista
+    echo "</ul>";
+
+?>
