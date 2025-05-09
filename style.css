@@ -27,3 +27,20 @@ header, footer {
     border: 1px solid rgb(60, 116, 116);
     
 }
+.header_buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+button {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: rgb(60, 116, 116);
+    color: rgb(0, 0, 0);
+}

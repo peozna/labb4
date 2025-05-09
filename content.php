@@ -1,7 +1,17 @@
 <?php 
     include_once('db.php');
 
-    if(isset($_GET['post'])) {
+    if(isset($_GET['blogger'])) { //Om det finns en bloggare i URLen
+        $blogger_id = intval($_GET['blogger']); //Hämtar idt från URLen och gör det till en integer
+        if (isset($_GET['post'])) {
+            $post_id = intval($_GET['post']);
+            // Hämtar det valda inlägget, och säkerställer att det tillhör rätt bloggare
+            $query = "SELECT title, content FROM post WHERE id = $post_id AND user_id = $blogger_id";
+        } else {
+            // Hämtar senaste inlägget från den valda bloggaren
+            $query = "SELECT title, content FROM post WHERE userId = $blogger_id ORDER BY created DESC LIMIT 1";
+        }}
+    elseif(isset($_GET['post'])) {
         $post_id = intval($_GET['post']); //Hämtar idt från URLen och gör det till en integer
         $query = "SELECT title, content FROM post WHERE id = $post_id"; //Hämtar inlägget med det angivna idt.
     } else {

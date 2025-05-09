@@ -1,20 +1,28 @@
 <?php
 require_once('db_credentials.php');
-$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-
 
 // Koppla upp mot databasen, detta gör vi en gång när skriptet startar (sidan laddas in)
 $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+
+function add_post($title, $content, $userId) {
+    global $connection; //Så vi kommer åt den globala variabeln
+    $sql = 'INSERT INTO post (title, content, userId, created) VALUES (?,?,?,NOW())'; //Skapar SQL-frågan
+    $statement = mysqli_prepare($connection, $sql); //Förbereder frågan
+    mysqli_stmt_bind_param($statement, "ssi", $title, $content, $userId);
+    mysqli_stmt_execute($statement); //Utför frågan
+    mysqli_stmt_close($statement); //Stänger statementet när vi är klara
+}
 
 function add_user($username, $password)
 {
     global $connection; // Så vi kommer åt den globala variabeln
 
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hasha lösenordet
+
     // Skapa SQL-frågan
     $sql = 'INSERT INTO user (username, password) VALUES (?,?)';
     // Förbered frågan
     $statment = mysqli_prepare($connection, $sql);
-
     // Bind ihop variablerna med statement användarnamn och läsenord är strängar (s)
     mysqli_stmt_bind_param($statment, "ss", $username, $password);
 
@@ -72,7 +80,7 @@ function get_password($id)
     global $connection;
     $sql = 'SELECT password FROM user WHERE id=?';
     $statment = mysqli_prepare($connection, $sql);
-    mysqli_stmt_bind_param($statment, "s", $id);
+    mysqli_stmt_bind_param($statment, "i", $id);
     mysqli_stmt_execute($statment);
     $result = get_result($statment);
     mysqli_stmt_close($statment);

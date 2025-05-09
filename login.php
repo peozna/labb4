@@ -1,3 +1,4 @@
+
 <form method="POST" action="auth.php">
     <h2>Logga in</h2>
     <label>Användarnamn: <input type ="text" name="username"></label><br>

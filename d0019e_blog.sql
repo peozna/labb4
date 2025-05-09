@@ -66,6 +66,18 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Table structure for table `post`
+--
+CREATE TABLE `post`(
+    `id` int AUTO_INCREMENT PRIMARY KEY,
+    `userId` int NOT NULL,
+    `title` varchar(255) NOT NULL,
+    `content` longtext NOT NULL,
+    `created` datetime NOT NULL DEFAULT current_timestamp(),
+    FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE
+)
+
+--
 -- Indexes for dumped tables
 --
 
