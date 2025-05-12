@@ -1,23 +1,24 @@
 <?php 
     include_once('db.php');
 
-    $blogger_id = isset($_GET['blogger']) ? intval($_GET['blogger']) : null; //Hämtar idt från URLen och gör den till en integer
-    if ($blogger_id) {
-        $query = "SELECT username, presentation, image FROM user WHERE id = $blogger_id"; //Hämtar användaren med det angivna idt.
+    if(isset($_GET['blogger'])) { //Kollar om det finns en blogger i URLen
+        $blogger_id = intval($_GET['blogger']); //Hämtar idt från URLen och gör den till en integer
+    } elseif(isset($_SESSION['userId'])){
+        $blogger_id = $_SESSION['userId']; //Om det finns en inloggad användare, sätt idt till den inloggade användaren
     } else {
-        $query = "SELECT username, presentation, image FROM user ORDER BY created DESC LIMIT 1"; //Hämtar den senaste användaren
-    }
+        $blogger_id = null; //Sätter idt till null om det inte finns någon blogger i URLen
+    } 
 
-    $result = mysqli_query($connection, $query); //Utför SQL frågan
-    $row = mysqli_fetch_assoc($result); //Hämtar resultatet som en associativ array
-    if ($row) {
-        echo "<h3> Bloggaren: " . htmlspecialchars($row['username']) . "</h3>"; //Skriver ut användarnamnet
-        echo "<p>" . nl2br(htmlspecialchars($row['presentation'])) . "</p>"; //Skriver ut presentationen
-        if (!empty($row['image'])) { //Om det finns en bild, skriv ut den
-            echo "<img src = 'img/" . htmlspecialchars($row['image']) . "' alt='Profilbild'>"; 
-        }
+    if($blogger_id) {
+        $query = "SELECT id, username, presentation, image FROM user WHERE id = $blogger_id"; //Hämtar bloggaren med det angivna idt
     } else {
-        echo "<h3>Det finns inga bloggare.</h3>"; //Om inga bloggare finns, skriv ut meddelande    }
+        $query = "SELECT id, username, presentation, image FROM user ORDER BY created DESC LIMIT 1"; //Hämtar den senaste bloggen 
     }
-   
+    $result = mysqli_query($connection, $query); //Utför SQL-frågan
+    $row = mysqli_fetch_assoc($result); //Hämtar resultatet som en associativ array
+
+    if(isset($_SESSION['userId']) && $_SESSION['userId'] == $row['id']) { //Om det finns en inloggad användare och den är samma som bloggaren
+        echo "<h3>Din profil</h3>"; //Skriver ut rubriken
+        echo "<p><a href='profile_pic.php'><button>Ändra profilbild</button></a></p>"; //Länk för att ändra profilbild
+    }
 ?>

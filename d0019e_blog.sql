@@ -56,7 +56,8 @@ CREATE TABLE `post` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  ADD PRIMARY KEY (`id`),
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `title` varchar(255) DEFAULT NULL,

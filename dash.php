@@ -1,16 +1,76 @@
-
 <?php
     include_once('db.php'); // Inkluderar databasanslutningen
     include('auth.php');
-    session_start(); // Startar sessionen
+    include('header.php'); // Inkluderar headern
+    
+    if(!isset($_SESSION['username'])) { // Kollar om användaren är inloggad
+        header('Location: index.php'); // Om inte, omdirigerar till startsidan
+        exit(); // Avslutar skriptet
+    }
+
+    $userId = $_SESSION['user_id']; // Hämtar användar-id från sessionen
+    $username = $_SESSION['username']; // Hämtar användarnamn från sessionen
     
 ?>
 
-<h2>Välkommen, <?php echo $_SESSION['username'];?></h2>
+<!DOCTYPE html> 
+<html lang="sv"> 
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Gör sidan responsiv -->
+    <link rel="stylesheet" href="style.css"> 
+    <title>Min blogg</title> 
+</head>
+<body>
+    <div class ="layout">
+        <div class="right">
+        <h3>Min blogg</h3>
+    <?php 
+    $query = "SELECT username, presentation, image FROM user WHERE id = ?";
+    $statement = $connection->prepare($query); // Förbereder SQL-frågan
+    $statement->bind_param('i', $userId); // Binder parametrarna till SQL-frågan
+    $statement->execute(); // Utför SQL-frågan
+    $result = $statement->get_result(); // Hämtar resultatet av SQL-frågan
+    if($row = $result->fetch_assoc()) {
+        echo "<h4>" . htmlspecialchars($row['username']) . "</h4>"; // Skriver ut användarnamnet
+        echo "<p>" . htmlspecialchars($row['presentation']) . "</p>"; // Skriver ut presentationen
+        if($row['image']) { // Kollar om användaren har en bild
+            echo "<img src='uploads/" . htmlspecialchars($row['image']) . "' alt='Profilbild'>"; // Skriver ut bilden
+        } else {
+            echo "<img src='uploads/default.png' alt='Profilbild'>"; // Skriver ut en standardbild om ingen bild finns
+        }
+    } else {
+        echo "<p>Ingen användare hittades.</p>"; // Skriver ut meddelande om ingen användare hittas
+    } ?>
 
-<ul> <!-- Skapar en lista med länkar till olika sidor -->
-    <li><a href ="post.php">Skapa nytt inlägg</a></li>
-    <li><a href ="my_posts.php">Hantera mina inlägg</a></li>
-    <li><a href ="profile_pic.php">Ändra profilbild</a></li>
-    <li><a href ="logout.php">Logga ut</a></li>
-</ul>
+    <p><a href="profile_pic.php"><button>Ändra profilbild</button></a></p> 
+    </div>
+
+    <div class="center">
+    <div class="header_buttons">
+            <a href="post.php"><button>Skapa nytt inlägg</button></a>
+        </div>
+        <h3>Mina inlägg</h3>
+        <?php
+        $query = "SELECT * FROM post WHERE userId = ? ORDER BY created DESC"; //Hämtar alla inlägg tillhörande användaren
+        $statement = $connection->prepare($query); // Förbereder SQL-frågan
+        $statement->bind_param('i', $userId); // Binder parametrarna till SQL-frågan
+        $statement->execute(); // Utför SQL-frågan
+        $result = $statement->get_result(); // Hämtar resultatet av SQL-frågan
+
+        if($result->num_rows > 0) { 
+            while($post=$result->fetch_assoc()){
+                echo "<article>";
+                echo "<h4>" . htmlspecialchars($post['title']) . "</h4>"; // Skriver ut titeln på inlägget
+                echo "<p>" . nl2br(htmlspecialchars($post['content'])) . "</p>"; // Skriver ut innehållet i inlägget med radbrytningar
+                echo "</article><hr>";
+            }
+            } else {
+                echo "<p>Inga inlägg hittades.</p>"; // Skriver ut meddelande om inga inlägg hittas
+            }
+        ?>
+    </div>
+    </div>
+<?php include('footer.php'); // Inkluderar footern ?>
+</body>
+</html>

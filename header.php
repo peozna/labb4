@@ -1,5 +1,7 @@
 <?php 
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 ?>
 
 <header>
@@ -9,6 +11,9 @@
 <div class="header_buttons">
     <?php 
         if(isset($_SESSION['username'])) { ?> <!-- Om användaren är inloggad -->
+        <span>Inloggad som: <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <a href="dash.php" style="margin-left:10px;"><button>Min blogg</button></a>
+            <a href="index.php" style="margin-left:10px;"><button>Startsida</button></a>
         <a href='logout.php'>
             <button>Logga ut</button>
         </a> <!-- Knapp för att logga ut -->

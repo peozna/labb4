@@ -17,7 +17,7 @@
     } else {
         $query = "SELECT title, content FROM post ORDER BY created DESC LIMIT 1"; //Hämtar det senaste inlägget
     }
-
+    echo "<h1>Senaste inläggen</h1>"; //Skriver ut rubriken
     $result = mysqli_query($connection, $query); //Utför SQL frågan
     if (!$result) {
         die("Query failed: " . mysqli_error($connection)); //Om frågan misslyckas, skriv ut felmeddelande
@@ -28,7 +28,7 @@
         echo "<h2>" . htmlspecialchars($row['title']) . "</h2>"; //Skriver ut titeln på inlägget
         echo "<p>" . nl2br(htmlspecialchars($row['content'])) . "</p>"; //Skriver ut innehållet i inlägget med radbrytningar
     } else {
-        echo "<h2>Det finns inga inlägg.</h2>"; //Om inga inlägg finns, skriv ut meddelande"
+        echo "<p>Det finns inga inlägg</p>"; //Om inga inlägg finns, skriv ut meddelande"
     }
 
 ?>

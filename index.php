@@ -2,6 +2,7 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Gör sidan responsiv -->
     <title>Bloggportal</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -17,7 +18,10 @@
         <?php include('content.php'); ?>
     </main>
     <aside class ="right">
-        <?php include('info.php'); ?>
+        <?php 
+        if(isset($_GET['blogger'])) {
+        include('info.php');
+        } ?>
     </aside>
 </div>
 

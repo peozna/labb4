@@ -1,5 +1,4 @@
 <?php
-    session_start(); // Startar sessionen
     include_once('db.php'); // Inkluderar databasanslutningen
     include('auth.php'); // Inkluderar autentisering
 
@@ -8,7 +7,7 @@
         $content = $_POST['content'] ?? ''; // Hämtar innehållet från formuläret
 
         if (!empty($title) && !empty($content)) {
-            add_post($_SESSION['user_id'], $title, $content); // Lägger till inlägget i databasen
+            add_post($title, $content, $_SESSION['user_id']); // Lägger till inlägget i databasen
             echo "<p>Inlägget har skapats!</p>"; // Skriver ut meddelande om att inlägget har skapats
         } else {
             echo "<p>Vänligen fyll i alla fält.</p>"; // Skriver ut meddelande om att alla fält måste fyllas i
