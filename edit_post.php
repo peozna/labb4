@@ -1,6 +1,5 @@
 <?php 
 include_once('db.php');
-session_start(); // Startar sessionen
 include('auth.php');
 
 if(!isset($_GET['id'])) { 
@@ -26,7 +25,7 @@ if(!$post) {
 }
 
 //Om inlägget finns, skriv ut formuläret för att redigera inlägget
-if($_SERVER['REQUEST METHOD'] == 'POST') {
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = $_POST['title'] ?? ''; // Hämtar titeln från formuläret
     $content = $_POST['content'] ?? ''; // Hämtar innehållet från formuläret
 

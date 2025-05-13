@@ -1,10 +1,10 @@
 <?php 
     include_once('db.php');
     include('auth.php');
-    session_start(); // Startar sessionen
 
-    $user_id = $_SESSION['userId']; // Hämtar användar-idt från sessionen
-    $sql = "SELECT * FROM posts WHERE userId = ?"; // Hämtar alla inlägg som tillhör den inloggade användaren
+
+    $user_id = $_SESSION['user_id']; // Hämtar användar-idt från sessionen
+    $sql = "SELECT * FROM post WHERE userId = ?"; // Hämtar alla inlägg som tillhör den inloggade användaren
     $statement = mysqli_prepare($connection, $sql); // Förbereder SQL-frågan
     mysqli_stmt_bind_param($statement, 'i', $user_id); 
     mysqli_stmt_execute($statement); // Utför SQL-frågan
@@ -20,6 +20,8 @@
 </head>
 
 <body>
+    <div class="my_posts">
+    <h3>Min blogg</h3>
     <h1>Mina inlägg</h1>
     <a href="post.php">Skapa nytt inlägg</a> <!-- Länk för att skapa nytt inlägg -->
     <a href="dash.php">Tillbaka till startsidan</a> <!-- Länk tillbaka till startsidan -->
@@ -34,6 +36,7 @@
         onclick="return confirm('Är du säker på att du vill ta bort inlägget?');">
         Ta bort inlägg</a> 
     </div>
+</div>
     <hr>
 <?php } ?> <!-- Avslutar while-loopen -->
 </body>

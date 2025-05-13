@@ -35,20 +35,20 @@
         echo "<h4>" . htmlspecialchars($row['username']) . "</h4>"; // Skriver ut användarnamnet
         echo "<p>" . htmlspecialchars($row['presentation']) . "</p>"; // Skriver ut presentationen
         if($row['image']) { // Kollar om användaren har en bild
-            echo "<img src='uploads/" . htmlspecialchars($row['image']) . "' alt='Profilbild'>"; // Skriver ut bilden
+            echo "<img src='uploads/" . htmlspecialchars($row['image']) . "' alt='Profilbild' style='width:80px; height:80px; object-fit:cover; border-radius:50%;'>"; // Skriver ut bilden
         } else {
-            echo "<img src='uploads/default.png' alt='Profilbild'>"; // Skriver ut en standardbild om ingen bild finns
+            echo "<img src='uploads/default.png' alt='Profilbild' style='width:80px; height:80px; object-fit:cover; border-radius:50%;'>"; // Skriver ut en standardbild om ingen bild finns
         }
     } else {
         echo "<p>Ingen användare hittades.</p>"; // Skriver ut meddelande om ingen användare hittas
     } ?>
 
-    <p><a href="profile_pic.php"><button>Ändra profilbild</button></a></p> 
+    <a href="account_manage.php"><button>Hantera mitt konto</button></a>
     </div>
 
     <div class="center">
     <div class="header_buttons">
-            <a href="post.php"><button>Skapa nytt inlägg</button></a>
+            <a href="post.php"><button class="create_button">Skapa nytt inlägg</button></a>
         </div>
         <h3>Mina inlägg</h3>
         <?php
@@ -60,10 +60,14 @@
 
         if($result->num_rows > 0) { 
             while($post=$result->fetch_assoc()){
-                echo "<article>";
                 echo "<h4>" . htmlspecialchars($post['title']) . "</h4>"; // Skriver ut titeln på inlägget
                 echo "<p>" . nl2br(htmlspecialchars($post['content'])) . "</p>"; // Skriver ut innehållet i inlägget med radbrytningar
-                echo "</article><hr>";
+                
+                //Knappar för att redigera och ta bort inlägg
+                if(isset($_SESSION['user_id'])) {
+                    echo "<a href='edit_post.php?id=" . $post['id'] . "'><button class='edit_button'>Redigera</button></a>"; // Länk för att redigera inlägget
+                    echo "<a href='delete_post.php?id=" . $post['id'] . "' onclick=\"return confirm('Är du säker på att du vill ta bort inlägget?');\"><button class='remove_button'>Ta bort inlägg</button></a>"; // Länk för att ta bort inlägget med bekräftelse
+                }
             }
             } else {
                 echo "<p>Inga inlägg hittades.</p>"; // Skriver ut meddelande om inga inlägg hittas

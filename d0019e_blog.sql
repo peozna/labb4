@@ -74,6 +74,7 @@ CREATE TABLE `post`(
     `userId` int NOT NULL,
     `title` varchar(255) NOT NULL,
     `content` longtext NOT NULL,
+    `image_path` varchar(255) DEFAULT NULL,
     `created` datetime NOT NULL DEFAULT current_timestamp(),
     FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE
 )

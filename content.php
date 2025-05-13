@@ -1,34 +1,42 @@
 <?php 
-    include_once('db.php');
+include_once('db.php');
 
-    if(isset($_GET['blogger'])) { //Om det finns en bloggare i URLen
-        $blogger_id = intval($_GET['blogger']); //Hämtar idt från URLen och gör det till en integer
-        if (isset($_GET['post'])) {
-            $post_id = intval($_GET['post']);
-            // Hämtar det valda inlägget, och säkerställer att det tillhör rätt bloggare
-            $query = "SELECT title, content FROM post WHERE id = $post_id AND user_id = $blogger_id";
-        } else {
-            // Hämtar senaste inlägget från den valda bloggaren
-            $query = "SELECT title, content FROM post WHERE userId = $blogger_id ORDER BY created DESC LIMIT 1";
-        }}
-    elseif(isset($_GET['post'])) {
-        $post_id = intval($_GET['post']); //Hämtar idt från URLen och gör det till en integer
-        $query = "SELECT title, content FROM post WHERE id = $post_id"; //Hämtar inlägget med det angivna idt.
+if (isset($_GET['blogger'])) { // Om det finns en bloggare i URLen
+    $blogger_id = intval($_GET['blogger']); // Hämtar idt från URLen och gör det till en integer
+    if (isset($_GET['post'])) {
+        $post_id = intval($_GET['post']);
+        // Hämtar det valda inlägget, och säkerställer att det tillhör rätt bloggare
+        $query = "SELECT title, content, image_path FROM post WHERE id = ? AND userId = ?";
+        $statement = mysqli_prepare($connection, $query);
+        mysqli_stmt_bind_param($statement, 'ii', $post_id, $blogger_id);
     } else {
-        $query = "SELECT title, content FROM post ORDER BY created DESC LIMIT 1"; //Hämtar det senaste inlägget
+        // Hämtar senaste inlägget från den valda bloggaren
+        $query = "SELECT title, content, image_path FROM post WHERE userId = ? ORDER BY created DESC LIMIT 1";
+        $statement = mysqli_prepare($connection, $query);
+        mysqli_stmt_bind_param($statement, 'i', $blogger_id);
     }
-    echo "<h1>Senaste inläggen</h1>"; //Skriver ut rubriken
-    $result = mysqli_query($connection, $query); //Utför SQL frågan
-    if (!$result) {
-        die("Query failed: " . mysqli_error($connection)); //Om frågan misslyckas, skriv ut felmeddelande
-    }
+} elseif (isset($_GET['post'])) {
+    $post_id = intval($_GET['post']); // Hämtar idt från URLen och gör det till en integer
+    $query = "SELECT title, content, image_path FROM post WHERE id = ?";
+    $statement = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($statement, 'i', $post_id);
+} else {
+    $query = "SELECT title, content, image_path FROM post ORDER BY created DESC LIMIT 1";
+    $statement = mysqli_prepare($connection, $query);
+}
 
-    $row = mysqli_fetch_assoc($result); //Hämntar resultatet som en associativ array
-    if ($row) {
-        echo "<h2>" . htmlspecialchars($row['title']) . "</h2>"; //Skriver ut titeln på inlägget
-        echo "<p>" . nl2br(htmlspecialchars($row['content'])) . "</p>"; //Skriver ut innehållet i inlägget med radbrytningar
-    } else {
-        echo "<p>Det finns inga inlägg</p>"; //Om inga inlägg finns, skriv ut meddelande"
-    }
+// Utför SQL-frågan
+mysqli_stmt_execute($statement);
+$result = mysqli_stmt_get_result($statement);
 
+echo "<h1>Senaste inläggen</h1>"; // Skriver ut rubriken
+if ($row = mysqli_fetch_assoc($result)) {
+    echo "<h2>" . htmlspecialchars($row['title']) . "</h2>"; // Skriver ut titeln på inlägget
+    echo "<p>" . nl2br(htmlspecialchars($row['content'])) . "</p>"; // Skriver ut innehållet i inlägget med radbrytningar
+    if (!empty($row['image_path'])) {
+        echo "<img src='uploads/" . htmlspecialchars($row['image_path']) . "' alt='Bild till inlägg' style='max-width:100%; height:auto; margin-top:10px;'><br>";
+    } // Om det finns en bild, skriv ut den
+} else {
+    echo "<p>Det finns inga inlägg</p>"; // Om inga inlägg finns, skriv ut meddelande
+}
 ?>

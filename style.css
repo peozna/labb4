@@ -14,6 +14,12 @@ header, footer {
     text-align: center;
     padding: 10px;
 }
+.my_posts {
+    background-color: rgb(101, 200, 200);
+    text-align: center;
+    padding: 20px;
+    border-radius: 10;
+}
 
 .layout {
     display: grid;
@@ -24,8 +30,25 @@ header, footer {
 }
 .left, .center, .right {
     padding: 10px;
-    border: 1px solid rgb(60, 116, 116);
+    border: 1px solid rgb(61, 118, 118);
     
+}
+.create_button {
+    top: 110px;
+    right: 400px;
+    padding: 4px 8px;
+    position: absolute;
+    background-color: rgb(255, 255, 255); 
+}
+.edit_button, .remove_button {
+    margin: 10px;
+    padding: 4px 8px;
+    background-color: rgb(101, 200, 200);
+    color: rgb(60, 116, 116);
+}
+.edit_button:hover, .remove_button:hover{
+    background-color: rgb(60, 116, 116);
+    color: black;
 }
 .header_buttons {
     display: flex;

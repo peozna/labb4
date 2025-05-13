@@ -4,11 +4,11 @@ require_once('db_credentials.php');
 // Koppla upp mot databasen, detta gör vi en gång när skriptet startar (sidan laddas in)
 $connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
 
-function add_post($title, $content, $userId) {
+function add_post($title, $content, $userId, $image_path = null) {
     global $connection; //Så vi kommer åt den globala variabeln
-    $sql = 'INSERT INTO post (title, content, userId, created) VALUES (?,?,?,NOW())'; //Skapar SQL-frågan
+    $sql = 'INSERT INTO post (title, content, userId, created, image_path) VALUES (?,?,?,NOW(),?)'; //Skapar SQL-frågan
     $statement = mysqli_prepare($connection, $sql); //Förbereder frågan
-    mysqli_stmt_bind_param($statement, "ssi", $title, $content, $userId);
+    mysqli_stmt_bind_param($statement, "ssis", $title, $content, $userId, $image_path);
     mysqli_stmt_execute($statement); //Utför frågan
     mysqli_stmt_close($statement); //Stänger statementet när vi är klara
 }

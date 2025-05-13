@@ -17,8 +17,18 @@
     $result = mysqli_query($connection, $query); //Utför SQL-frågan
     $row = mysqli_fetch_assoc($result); //Hämtar resultatet som en associativ array
 
+    if ($row):
+        // Visa profilbild om den finns
+        if (!empty($row['image'])) {
+            echo "<img src='uploads/{$row['image']}' alt='Profilbild' style='width:100px;height:100px;border-radius:50%;'><br>";
+        } else {
+            echo "<img src='uploads/default.png' alt='Standardbild' style='width:100px;height:100px;border-radius:50%;'><br>";
+        }
+        echo "<h3>{$row['username']}</h3>";
+        echo "<p>{$row['presentation']}</p>";
     if(isset($_SESSION['userId']) && $_SESSION['userId'] == $row['id']) { //Om det finns en inloggad användare och den är samma som bloggaren
         echo "<h3>Din profil</h3>"; //Skriver ut rubriken
         echo "<p><a href='profile_pic.php'><button>Ändra profilbild</button></a></p>"; //Länk för att ändra profilbild
     }
+endif;
 ?>

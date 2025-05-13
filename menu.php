@@ -8,16 +8,16 @@
         $userRow = mysqli_fetch_assoc($userResult); // Hämtar resultatet som en associativ array
 
         if ($userRow) {
-            echo "<h3> Bloggaren: " . htmlspecialchars($userRow['username']) . "</3>"; //Skriver ut användarnamnet
+            echo "<h3> Inlägg av, " . htmlspecialchars($userRow['username']) . "</3>"; //Skriver ut användarnamnet
             //Hämtar alla inlägg från den valda bloggaren
-            $postQuery = "SELECT title, content FROM post WHERE userId = $blogger_id ORDER BY created DESC";
+            $postQuery = "SELECT id, title, content FROM post WHERE userId = $blogger_id ORDER BY created DESC";
             $postResult = mysqli_query($connection, $postQuery); // Utför SQL-frågan
 
             echo "<ul>";
             //Loopar igenom alla inlägg som tilhör den valda bloggaren
             while ($postRow = mysqli_fetch_assoc($postResult)) {
-                echo "<li><a href='index.php?blogger=$blogger_id&$post=" . $postRow['id'] . "'>" . 
-                     htmlspecialchars($postRow['title']) . "</a></li>";
+                echo "<li><a href='index.php?blogger=$blogger_id&post=" . $postRow['id'] . "'>" . 
+                htmlspecialchars($postRow['title']) . "</a></li>";
             }
             echo "</ul>";
         } else {
