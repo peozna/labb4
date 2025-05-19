@@ -35,7 +35,7 @@
         echo "<h4>" . htmlspecialchars($row['username']) . "</h4>"; // Skriver ut användarnamnet
         echo "<p>" . htmlspecialchars($row['presentation']) . "</p>"; // Skriver ut presentationen
         
-        $image = $row['image'] ?? 'default.png';
+        $image = $row['image'] ?: 'default.png';
         echo "<img src='uploads/" . htmlspecialchars($image) . "' alt='Profilbild' style='width:80px; height:80px; object-fit:cover; border-radius:50%;'>";
 
     } else {
