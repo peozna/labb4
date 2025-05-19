@@ -33,7 +33,7 @@
     $result = $statement->get_result(); // Hämtar resultatet av SQL-frågan
     if($row = $result->fetch_assoc()) {
         echo "<h4>" . htmlspecialchars($row['username']) . "</h4>"; // Skriver ut användarnamnet
-        echo "<p>" . htmlspecialchars($row['presentation']) . "</p>"; // Skriver ut presentationen
+        echo "<p>" . htmlspecialchars($row['presentation'] ?? '') . "</p>"; // Skriver ut presentationen
         
         $image = isset($row['image']) && !empty($row['image']) ? $row['image'] : 'default.png';
         echo "<img src='uploads/" . htmlspecialchars($image) . "' alt='Profilbild' style='width:80px; height:80px; object-fit:cover; border-radius:50%;'>";
