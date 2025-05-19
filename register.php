@@ -18,6 +18,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hashar lösenordet
             add_user($username, $hashedPassword); // Lägger till användaren i databasen
+            
+            //Lägger till användarnamnet i en textfil
+            $filename = "../uploads/users.txt";
+            file_put_contents($filename, $username . PHP_EOL, FILE_APPEND);
+
             $success = "Användaren har registrerats, du kan nu logga in"; // Sätter framgångsmeddelande
         }
     }
@@ -44,6 +49,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p><?= htmlspecialchars($success) ?></p> <!-- Skriver ut framgångsmeddelandet -->
         </div>
     <?php } ?>
+
+    <body>
     <form method="POST"> <!-- Formulär för att registrera ny användare -->
         <label for="username">Användarnamn:</label><br>
         <input type="text" id="username" name="username" required><br><br> <!-- Inmatningsfält för användarnamn -->
@@ -52,3 +59,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="submit" value="Registrera"> <!-- Skicka-knapp -->
     </form>
     <a href="login.php">Tillbaka till inloggning</a> <!-- Länk tillbaka till inloggningssidan -->
+    </body>
+    </html>
