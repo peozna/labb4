@@ -34,11 +34,10 @@
     if($row = $result->fetch_assoc()) {
         echo "<h4>" . htmlspecialchars($row['username']) . "</h4>"; // Skriver ut användarnamnet
         echo "<p>" . htmlspecialchars($row['presentation']) . "</p>"; // Skriver ut presentationen
-        if($row['image']) { // Kollar om användaren har en bild
-            echo "<img src='uploads/" . htmlspecialchars($row['image']) . "' alt='Profilbild' style='width:80px; height:80px; object-fit:cover; border-radius:50%;'>"; // Skriver ut bilden
-        } else {
-            echo "<img src='uploads/default.png' alt='Profilbild' style='width:80px; height:80px; object-fit:cover; border-radius:50%;'>"; // Skriver ut en standardbild om ingen bild finns
-        }
+        
+        $image = $row['image'] ?? 'default.png';
+        echo "<img src='uploads/" . htmlspecialchars($image) . "' alt='Profilbild' style='width:80px; height:80px; object-fit:cover; border-radius:50%;'>";
+
     } else {
         echo "<p>Ingen användare hittades.</p>"; // Skriver ut meddelande om ingen användare hittas
     } ?>
