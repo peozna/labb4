@@ -50,7 +50,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     <?php } ?>
 
-    <body>
     <form method="POST"> <!-- Formulär för att registrera ny användare -->
         <label for="username">Användarnamn:</label><br>
         <input type="text" id="username" name="username" required><br><br> <!-- Inmatningsfält för användarnamn -->
