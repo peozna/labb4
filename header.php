@@ -12,17 +12,17 @@
     <?php 
         if(isset($_SESSION['username'])) { ?> <!-- Om användaren är inloggad -->
         <span>Inloggad som: <?php echo htmlspecialchars($_SESSION['username']); ?></span>
-            <a href="dash.php" style="margin-left:10px;"><button>Min blogg</button></a>
-            <a href="index.php" style="margin-left:10px;"><button>Startsida</button></a>
-        <a href='logout.php'>
-            <button>Logga ut</button>
+            <a href="dash.php" class="button" style="margin-left:10px;">Min blogg</a>
+            <a href="index.php" class="button" style="margin-left:10px;">Startsida</a>
+        <a href='logout.php' class="button">
+            Logga ut
         </a> <!-- Knapp för att logga ut -->
     <?php } else { ?> <!-- Om användaren inte är inloggad -->
-        <a href="login.php">
-        <button>Logga in</button>
+        <a href="login.php" class="button">
+        Logga in
     </a> <!-- Knapp för att logga in -->
-    <a href="register.php">
-       <button>Registrera dig</button>
+    <a href="register.php" class="button">
+       Registrera dig
     </a> <!-- Knapp för att registrera sig -->
     <?php } ?>
 </div>
